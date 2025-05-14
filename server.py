@@ -14,7 +14,7 @@ class LoginRequest(BaseModel):
 @app.post("/login")
 def login(req: LoginRequest):
     try:
-        session = rh.login(username=req.username, password=req.password, rh.lib.constants.ApiEnvironment.DEMO_DEV_URL)
+        session = rh.login(username=req.username, password=req.password, rhino_api_url=rh.lib.constants.ApiEnvironment.DEMO_DEV_URL)
         session_id = str(uuid.uuid4())
         sessions[session_id] = session
         return {"session_id": session_id}
