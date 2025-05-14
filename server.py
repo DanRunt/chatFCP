@@ -21,7 +21,7 @@ def login(req: LoginRequest):
     except Exception as e:
         raise HTTPException(status_code=401, detail=str(e))
 
-@app.post("/projects")
+@app.get("/projects")
 def get_projects(session_id: str = Header(...)):
     session = sessions.get(session_id)
     if not session:
