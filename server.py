@@ -13,7 +13,7 @@ class LoginRequest(BaseModel):
 def login(req: LoginRequest):
     try:
         session = rh.login(username=req.username, password=req.password)
-        return {"session_token": session.token}
+        return {"session_token": session}
     except Exception as e:
         raise HTTPException(status_code=401, detail=str(e))
 
