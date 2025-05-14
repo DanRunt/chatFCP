@@ -1,7 +1,7 @@
 # server.py
 from fastapi import FastAPI, HTTPException, Header
 from pydantic import BaseModel
-import rhino_health as rh, 
+import rhino_health as rh, ApiEnvironment
 import uuid
 
 app = FastAPI()
@@ -14,7 +14,7 @@ class LoginRequest(BaseModel):
 @app.post("/login")
 def login(req: LoginRequest):
     try:
-        session = rh.login(username=req.username, password=req.password, )
+        session = rh.login(username=req.username, password=req.password, ApiEnvironment.DEMO_DEV_URL)
         session_id = str(uuid.uuid4())
         sessions[session_id] = session
         return {"session_id": session_id}
