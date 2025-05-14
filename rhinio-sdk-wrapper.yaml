@@ -1,0 +1,66 @@
+openapi: 3.1.0
+info:
+  title: Rhino Health SDK Login API
+  version: 1.0.0
+  description: HTTP wrapper for rhino_health SDK login
+servers:
+  - url: https://chatfcp.onrender.com
+    description: SDK wrapper server
+paths:
+  /login:
+    post:
+      operationId: loginUser
+      summary: Log in to Rhino Health via SDK
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+              required:
+                - username
+                - password
+      responses:
+        '200':
+          description: Successful login response
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  session_token:
+                    type: string
+        '401':
+          description: Unauthorized
+  /projects:
+    get:
+      operationId: getProjects
+      summary: Retrieve list of projects using active session
+      parameters:
+        - name: session_id
+          in: header
+          required: true
+          description: Session ID from login response
+          schema:
+            type: string
+      responses:
+        '200':
+          description: List of projects
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  projects:
+                    type: array
+                    items:
+                      type: object
+        '401':
+          description: Invalid or missing session ID
+        '500':
+          description: Server error during SDK call
