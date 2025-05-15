@@ -22,7 +22,7 @@ def login(req: LoginRequest):
         raise HTTPException(status_code=401, detail=str(e))
 
 @app.get("/projects")
-def get_projects(session_id: str = Header(...)):
+def get_projects(session_id: str = Header(..., alias="session-id")):
     session = sessions.get(session_id)
     if not session:
         raise HTTPException(status_code=401, detail="Invalid or expired session_id")
