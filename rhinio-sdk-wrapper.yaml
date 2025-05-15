@@ -38,16 +38,20 @@ paths:
         '401':
           description: Unauthorized
   /projects:
-    get:
+    post:
       operationId: getProjects
-      summary: Retrieve list of projects using active session
-      parameters:
-        - name: session_id
-          in: header
-          required: true
-          description: Session ID from login response
-          schema:
-            type: string
+      summary: Retrieve list of projects using session ID in body
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                session_id:
+                  type: string
+              required:
+                - session_id
       responses:
         '200':
           description: List of projects
@@ -61,6 +65,7 @@ paths:
                     items:
                       type: object
         '401':
-          description: Invalid or missing session ID
+          description: Invalid or expired session ID
         '500':
-          description: Server error during SDK call
+          description: SDK error
+
